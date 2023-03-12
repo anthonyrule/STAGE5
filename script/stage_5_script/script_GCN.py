@@ -16,7 +16,7 @@ if 1:
     # ------------------------------------------------------
 
     # ---- objection initialization setction ---------------
-    data_obj = load()
+    data_obj = Dataset_Loader('train', '')
     data_obj.dataset_source_folder_path = '../../data/citeseer'
     # data_obj.dataset_source_file_name = 'train.csv'
     # data_obj.dataset5_source_folder_path = '../../data/stage_5_data/'
