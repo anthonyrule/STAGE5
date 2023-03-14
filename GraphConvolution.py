@@ -1,5 +1,3 @@
-
-
 import math
 
 import torch
@@ -13,7 +11,7 @@ class GraphConvolution(Module):
     Simple GCN layer, similar to https://arxiv.org/abs/1609.02907
     """
 
-    def __init__(self, in_features, out_features, bias=True):
+    def __init__(self, in_features, out_features, bias=False):
         super(GraphConvolution, self).__init__()
         self.in_features = in_features
         self.out_features = out_features

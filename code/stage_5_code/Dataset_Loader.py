@@ -1,10 +1,3 @@
-'''
-Concrete IO class for a specific dataset
-'''
-
-# Copyright (c) 2017 Jiawei Zhang <jwzhanggy@gmail.com>
-# License: TBD
-
 from code.base_class.dataset import dataset
 import torch
 import numpy as np
@@ -16,11 +9,7 @@ class Dataset_Loader(dataset):
 
     def __init__(self, seed=None, dName=None, dDescription=None):
         super(Dataset_Loader, self).__init__(dName, dDescription)
-    def accuracy(output, labels):
-        preds = output.max(1)[1].type_as(labels)
-        correct = preds.eq(labels).double()
-        correct = correct.sum()
-        return correct / len(labels)
+
     def adj_normalize(self, mx):
         """normalize sparse matrix"""
         rowsum = np.array(mx.sum(1))
@@ -68,7 +57,6 @@ class Dataset_Loader(dataset):
         labels = torch.LongTensor(np.where(onehot_labels)[1])
         adj = self.sparse_mx_to_torch_sparse_tensor(norm_adj)
 
-
         # the following part, you can either put them into the setting class or you can leave them in the dataset loader
         # the following train, test, val index are just examples, sample the train, test according to project requirements
         if self.dataset_name == 'cora':
@@ -88,26 +76,15 @@ class Dataset_Loader(dataset):
             idx_train = range(5)
             idx_val = range(5, 10)
             idx_test = range(5, 10)
-        else:
-            idx_train = range(140)
-            idx_test = range(200, 1200)
-            idx_val = range(1200, 1500)
 
         idx_train = torch.LongTensor(idx_train)
         idx_val = torch.LongTensor(idx_val)
         idx_test = torch.LongTensor(idx_test)
         # get the training nodes/testing nodes
-        # train_x = features[idx_train]
-        # val_x = features[idx_val]
-        # test_x = features[idx_test]
-        # print(train_x, val_x, test_x)
-
-        model = GCN(nfeat=features.shape[1],
-                    nhid=args.hidden,
-                    nclass=labels.max().item() + 1,
-                    dropout=args.dropout)
-        optimizer = optim.Adam(model.parameters(),
-                               lr=args.lr, weight_decay=args.weight_decay)
+        train_x = features[idx_train]
+        val_x = features[idx_val]
+        test_x = features[idx_test]
+        print(train_x, val_x, test_x)
 
         train_test_val = {'idx_train': idx_train, 'idx_test': idx_test, 'idx_val': idx_val}
         graph = {'node': idx_map, 'edge': edges, 'X': features, 'y': labels, 'utility': {'A': adj, 'reverse_idx': reverse_idx_map}}
