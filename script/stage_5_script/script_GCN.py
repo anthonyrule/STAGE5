@@ -1,4 +1,5 @@
 from code.stage_5_code.Method_GCN import MethodGCN
+from code.stage_5_code.Method_GCN_ResNet import MethodDeepGCNResNet
 from code.stage_5_code.Result_Saver import Result_Saver
 from code.stage_5_code.Setting_Train_Test_Split import Setting_Train_Test_Split
 from code.stage_5_code.Setting_Train_Test import Setting_Train_Test
@@ -49,6 +50,7 @@ if 1:
                 seed = iter
                 dropout = 0.5
                 nhid = 16
+                depth = 3
                 #------------------------------------------------------
 
                 #---- objection initialization setction ---------------
@@ -60,7 +62,8 @@ if 1:
                 data_obj.c = c
                 data_obj.method_type = 'GCN'
 
-                method_obj = MethodGCN(nfeature, nhid, nclass, dropout, seed)
+                # method_obj = MethodGCN(nfeature, nhid, nclass, dropout, seed)
+                method_obj = MethodDeepGCNResNet(nfeature, nhid, nclass, dropout, seed, depth)
                 method_obj.lr = lr
                 method_obj.lr = lr
                 method_obj.epoch = epoch
